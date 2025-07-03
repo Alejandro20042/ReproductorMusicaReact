@@ -1,29 +1,25 @@
-import { useState } from 'react';
+import type { SearchBarProps } from '../interfaces/types';
 
-const SearchBar = () => {
-  const [search, setSearch] = useState('');
-
+const SearchBar = ({searchTerm,onSearchChange, onClear,showClear,}: SearchBarProps) => {
   return (
     <div className="input-container">
       <input
         type="text"
         id="searchInput"
         placeholder="Search..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        value={searchTerm}
+        onChange={e => onSearchChange(e.target.value)}
       />
-      {search && (
-        <span
-          className="clear-icon"
-          id="clearSearch"
-          onClick={() => setSearch('')}
-        >
-          ✖
-        </span>
-      )}
-      <div id="searchResults" className="search-results"></div>
+      <span
+        className="clear-icon"
+        id="clearSearch"
+        onClick={onClear}
+        style={{ display: showClear ? 'inline' : 'none' }}
+      >
+        ✖
+      </span>
     </div>
   );
-}
+};
 
 export default SearchBar;

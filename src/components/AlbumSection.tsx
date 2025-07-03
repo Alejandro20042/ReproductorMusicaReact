@@ -1,23 +1,18 @@
-//UTILIZAR MAP PARA RENDERIZAR ALBUMNES SIGGLES Y LASTEST
+import type { AlbumSectionProps } from '../interfaces/types';
 
-const AlbumSection = () => {
+const AlbumSection = ({ albums }: AlbumSectionProps) => {
   return (
-    <div className="containeralbumformmain">
-      <div className="albumForm">
-        <p className="albumlastes">Album latest</p>
-        <ol id="albumList">
-          
-        </ol>
-      </div>
-
-      <div className="lastestSigle">
-        <p className="textlastessigle">Lastest Single</p>
-        <ol id="singleList">
-          
-        </ol>
-      </div>
+    <div className="albumForm">
+      <p className="albumlastes">Album latest</p>
+      <ol id="albumList">
+        {albums.slice(0, 5).map(album => (
+          <li key={album.id} className="albums">
+            ▶ <img alt="" />
+            {album.titulo} ({album.añoLanzamiento})
+          </li>
+        ))}
+      </ol>
     </div>
   );
-}
-
+};
 export default AlbumSection;

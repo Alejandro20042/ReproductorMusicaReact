@@ -1,5 +1,5 @@
 body {
-  background-color: #001F5B;
+  background-color: #111;
   color: white;
   margin: 0;
   padding: 0;
@@ -219,3 +219,41 @@ body {
   display: none;
 
 }
+
+.hamburger {
+  display: none;
+  font-size: 24px;
+  background: #111;
+  border: none;
+  color: white;
+  cursor: pointer;
+  margin: 10px;
+  z-index: 2000;
+  
+}
+
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .sideMenu {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    background-color: #111;
+
+    z-index: 1000;
+    transition: transform 0.3s ease;
+  }
+
+  .sideMenu.cerrado {
+    transform: translateX(-100%);
+  }
+
+  .sideMenu.abierto {
+    transform: translateX(0);
+  }
+}
+
