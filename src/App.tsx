@@ -3,7 +3,6 @@ import MainContent from './components/MainContent';
 import SideMenu from './components/SideMenu';
 import "./styles/style.css"
 import type { Song } from './interfaces/types';
-import MusicPlayer from './components/MusicPlayer';
 
 const App = () => {
   const [allSongs, setAllSongs] = useState<Song[]>([]);
@@ -74,8 +73,6 @@ const App = () => {
         showClearBtn={showClearBtn}
         searchResults={searchResults}
       />
-
-       <MusicPlayer/>
     </div>
   );
 };
