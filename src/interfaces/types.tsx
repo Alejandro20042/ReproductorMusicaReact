@@ -1,69 +1,36 @@
-//src/interface/types
+// src/interfaces/types.ts
 
-export interface AlbumCompleto {
-  id: number;
+export interface Album {
+  id: string | number;
   titulo: string;
-  artistaId: number;
   añoLanzamiento: number;
-  genero: string;
-  duracionTotal: string;
-  numeroTracks: number;
-  portada: string;
-  descripcion: string;
-  sello: string;
-  productor: string;
+  portada?: string;           // Opcional si usas portada
+  descripcion?: string;       // Opcional
+  // otros campos si los usas, sino eliminar
 }
 
-export interface ArtistaCompleto {
-  id: number;
+export interface Artist {
+  id: string | number;
   nombre: string;
-  nacionalidad: string;
-  genero: string;
-  añoFormacion: number;
-  biografia: string;
-  imagen: string;
-}
-
-export interface Cancion {
-  id: number;
-  titulo: string;
-  albumId: number;
-  artistaId: number;
-  duracion: string;
-  pista: number;
-  letra: string;
-  compositor: string;
-  año: number;
-  artista: string;
-  album: string;
-  artistaCompleto: ArtistaCompleto;
-  albumCompleto: AlbumCompleto;
+  imagen?: string;
+  // otros campos opcionales según uso
 }
 
 export interface Song {
   id: string | number;
   titulo: string;
-  artista: string;
   duracion: string;
-  albumCompleto: {
-    id: string | number;
-    titulo: string;
-    añoLanzamiento: number;
-  };
-  artistaCompleto: {
-    nombre: string;
-  };
+  artista: string;
+  albumCompleto: Album;
+  artistaCompleto: Pick<Artist, 'nombre'>;  
+  imagen?: string;                          
 }
 
-export interface Single {
+export interface Single extends Song {
   id: string | number;
   titulo: string;
   artista: string;
   duracion: string;
-}
-
-export interface SingleSectionProps {
-  singles: Single[];
 }
 
 export interface SearchBarProps {
@@ -74,26 +41,24 @@ export interface SearchBarProps {
 }
 
 export interface MainContentProps {
-  albums: {
-    id: string | number;
-    titulo: string;
-    añoLanzamiento: number;
-  }[];
+  albums: Album[];
   singles: Song[];
   searchTerm: string;
   onSearchChange: (term: string) => void;
   onClearSearch: () => void;
   showClearBtn: boolean;
   searchResults: Song[];
-}
-
-
-export interface Album {
-  id: string | number;
-  titulo: string;
-  añoLanzamiento: number;
+  allSongs: Song[];
 }
 
 export interface AlbumSectionProps {
   albums: Album[];
+}
+
+export interface CreatedForUsersProps {
+  songs: Song[];
+}
+
+export interface SingleSectionProps {
+  singles: Song[];
 }

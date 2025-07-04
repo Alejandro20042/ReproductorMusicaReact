@@ -5,7 +5,7 @@ const AlbumSection = ({ albums }: AlbumSectionProps) => {
     <div className="albumForm">
       <p className="albumlastes">Album latest</p>
       <ol id="albumList">
-        {albums.slice(0, 5).map(album => (
+        {albums.slice(0, 4).map(album => (
           <li key={album.id} className="albums">
             ▶ <img alt="" />
             {album.titulo} ({album.añoLanzamiento})

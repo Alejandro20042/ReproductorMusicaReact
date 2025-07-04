@@ -5,7 +5,7 @@ const SingleSection = ({ singles }: SingleSectionProps) => {
     <div className="lastestSigle">
       <p className="textlastessigle">Lastest Single</p>
       <ol id="singleList">
-        {singles.slice(0, 5).map(single => (
+        {singles.slice(0, 4).map(single => (
           <li key={single.id} className="albumssingle">
             ▶ <img alt="" />
             <strong>{single.titulo}</strong> - {single.artista}{' '}
