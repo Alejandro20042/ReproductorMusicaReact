@@ -4,16 +4,15 @@ export interface Album {
   id: string | number;
   titulo: string;
   añoLanzamiento: number;
-  portada?: string;           // Opcional si usas portada
-  descripcion?: string;       // Opcional
-  // otros campos si los usas, sino eliminar
+  portada?: string;           
+  descripcion?: string;       
+  
 }
 
 export interface Artist {
   id: string | number;
   nombre: string;
   imagen?: string;
-  // otros campos opcionales según uso
 }
 
 export interface Song {
@@ -22,7 +21,7 @@ export interface Song {
   duracion: string;
   artista: string;
   albumCompleto: Album;
-  artistaCompleto: Pick<Artist, 'nombre'>;  
+  artistaCompleto: Artist;  
   imagen?: string;                          
 }
 
