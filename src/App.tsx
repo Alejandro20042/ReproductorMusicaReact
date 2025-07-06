@@ -72,8 +72,8 @@ const App = () => {
         onClearSearch={handleClearSearch}
         showClearBtn={showClearBtn}
         searchResults={searchResults}
-        allSongs={allSongs}
-      />
+        allSongs={allSongs} 
+        albumCovers={[]}  />
     </div>
   );
 };

@@ -4,6 +4,7 @@ import SingleSection from './SingleSection';
 import MusicPlayer from './MusicPlayer';
 import type { MainContentProps } from '../interfaces/types';
 import CreatedForUsers from './CreatedForUsers';
+import BackgroundCarousel from './BackgroundCarousel';
 
 
 const MainContent = ({
@@ -18,15 +19,14 @@ const MainContent = ({
 }: MainContentProps) => {
   return (
     <div className="mainContent">
-      <div
-        className="centralView"
-      >
+      <div className="centralView">
         <SearchBar
           searchTerm={searchTerm}
           onSearchChange={onSearchChange}
           onClear={onClearSearch}
           showClear={showClearBtn}
         />
+        <BackgroundCarousel allSongs={allSongs} />
 
         <div className="search-results" id="searchResults">
           {searchResults.length === 0 ? (
@@ -42,19 +42,6 @@ const MainContent = ({
               </div>
             ))
           )}
-        </div>
-
-        <div className="titleGroup">
-          <h1 className="centralText">WHAT'S NEW?</h1>
-          <p className="textdescription">
-            Aquí puedes encontrar los últimos lanzamientos y 
-            sencillos más populares del momento.
-          </p>
-          <ul >
-            {albums.slice(0, 2).map(album => (
-              <li className='ulMainContent' key={album.id}>{album.titulo} ({album.añoLanzamiento})</li>
-            ))}
-          </ul>
         </div>
 
       </div>

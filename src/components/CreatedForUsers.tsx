@@ -1,26 +1,26 @@
 import type { CreatedForUsersProps } from '../interfaces/types';
 
-const CreatedForUsers = ({ songs }: CreatedForUsersProps) => {
-  const grouped = songs.slice(0, 8);
-  const getImageUrl = (path: string) => `https://api-musica.netlify.app/${path}`;
+const CreatedForAlejandro = ({ songs }: CreatedForUsersProps) => {
+  const uniqueAlbums = songs
+    .map(song => song.albumCompleto)
+    .filter((album, index, self) => index === self.findIndex(a => a.id === album.id));
 
   return (
     <div className="created-section">
       <h2 className="section-title">Created for Alejandro</h2>
       <div className="grid-container">
-        {grouped.map((song, index) => (
+        {uniqueAlbums.map((album) => (
           <div
-            className="song-card"
-            key={index}
+            key={album.id}
+            className="album-card"
             style={{
-              backgroundImage: song.albumCompleto.portada
-                ? `url(${getImageUrl(song.albumCompleto.portada)})`
-                : 'none'
+              backgroundImage: `url(${encodeURI(`https://api-musica.netlify.app/${album.portada}`)})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
             }}
           >
-            <div className="card-overlay">
-              <strong>{song.titulo}</strong>
-              <p>{song.artistaCompleto.nombre}</p>
+            <div className="album-title-overlay">
+              <strong>{album.titulo}</strong>
             </div>
           </div>
         ))}
@@ -29,4 +29,5 @@ const CreatedForUsers = ({ songs }: CreatedForUsersProps) => {
   );
 };
 
-export default CreatedForUsers;
+export default CreatedForAlejandro;
+

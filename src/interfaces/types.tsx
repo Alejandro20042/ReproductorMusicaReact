@@ -48,6 +48,7 @@ export interface MainContentProps {
   showClearBtn: boolean;
   searchResults: Song[];
   allSongs: Song[];
+  albumCovers: string[];
 }
 
 export interface AlbumSectionProps {
