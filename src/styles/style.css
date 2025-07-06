@@ -55,7 +55,9 @@ body {
   overflow-x: hidden;
 }
 
-
+.centralView{
+   background: #111;
+}
 
 
 .centralView input {
