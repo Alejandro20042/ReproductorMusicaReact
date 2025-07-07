@@ -62,3 +62,7 @@ export interface CreatedForUsersProps {
 export interface SingleSectionProps {
   singles: Song[];
 }
+
+export interface GenreViewProps {
+  genres: string[];
+}

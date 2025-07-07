@@ -8,7 +8,6 @@ interface BackgroundCarouselProps {
 const BackgroundCarousel = ({ allSongs }: BackgroundCarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Albums únicos, para evitar repetidos y tener toda info
   const uniqueAlbums = allSongs
     .map(song => song.albumCompleto)
     .filter((album, index, self) =>
@@ -28,7 +27,7 @@ const BackgroundCarousel = ({ allSongs }: BackgroundCarouselProps) => {
   if (uniqueAlbums.length === 0) return null;
 
   const album = uniqueAlbums[currentIndex];
-  const imageUrl = encodeURI(`https://api-musica.netlify.app/${album.portada}`);  // <-- aquí
+  const imageUrl = encodeURI(`https://api-musica.netlify.app/${album.portada}`);
   const artistNombre = allSongs[currentIndex];
   const artist = artistNombre.artistaCompleto.nombre;
 

@@ -1,4 +1,6 @@
+//npm install react-router-dom
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const SideMenu = () => {
   const [abierto, setAbierto] = useState(true);
@@ -15,19 +17,19 @@ const SideMenu = () => {
         <ol>
           <li className="discoverButton">
             <img src="/images/search.png" alt="" />
-            Discover
+            <Link to="/">Home</Link>
           </li>
           <li className="genreButton">
             <img src="/images/genre.png" alt="" />
-            Genre
+            <Link to="/genres">Genre</Link>
           </li>
           <li className="topchartsButton">
             <img src="/images/heartphones.png" alt="" />
-            Top Charts
+            <Link to="/topcharts">Top Charts</Link>
           </li>
           <li className="podcastButton">
             <img src="/images/mic.png" alt="" />
-            Podcast
+            <Link to="/podcast">Podcast</Link>
           </li>
         </ol>
 
@@ -35,11 +37,11 @@ const SideMenu = () => {
         <ol>
           <li className="favorites">
             <img src="/images/start.png" alt="" />
-            Favorites
+            <Link to="/favorites">Favorites</Link>
           </li>
           <li className="playlist">
             <img src="/images/playlist.png" alt="" />
-            Playlist
+            <Link to="/playlist">Playlist</Link>
           </li>
         </ol>
       </div>

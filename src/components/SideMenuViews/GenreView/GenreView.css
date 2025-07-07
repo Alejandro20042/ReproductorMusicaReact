@@ -1,0 +1,33 @@
+.genre-view {
+  padding: 20px;
+  color: white;
+  background-color: #111;
+}
+
+.genre-title {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #fff;
+}
+
+.genre-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 15px;
+}
+
+.genre-card {
+  background: linear-gradient(to bottom right, #444, #222);
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.3s;
+}
+
+.genre-card:hover {
+  transform: scale(1.05);
+  background-color: #666;
+}

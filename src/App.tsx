@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MainContent from './components/MainContent';
 import SideMenu from './components/SideMenu';
 import "./styles/style.css"
 import type { Song } from './interfaces/types';
+import GenreView from './components/SideMenuViews/GenreView/GenreView';
 
 const App = () => {
   const [allSongs, setAllSongs] = useState<Song[]>([]);
@@ -11,15 +13,19 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState<Song[]>([]);
   const [showClearBtn, setShowClearBtn] = useState(false);
-
+  const [genres, setGenres] = useState<string[]>([]);
 
   useEffect(() => {
     async function fetchData() {
       try {
         const res = await fetch('https://api-musica.netlify.app/api/canciones');
         const data = await res.json();
-        console.log(data);
         setAllSongs(data.data);
+
+        fetch('https://api-musica.netlify.app/api/generos')
+          .then(res => res.json())
+          .then(data => setGenres(data.data))
+          .catch(err => console.error('Error fetching genres:', err));
 
         const uniqueAlbumsMap = new Map();
         data.data.forEach((song: Song) => {
@@ -62,19 +68,34 @@ const App = () => {
   };
 
   return (
-    <div className="containerPrincipal">
-      <SideMenu />
-      <MainContent
-        albums={albums}
-        singles={singles}
-        searchTerm={searchTerm}
-        onSearchChange={handleSearchChange}
-        onClearSearch={handleClearSearch}
-        showClearBtn={showClearBtn}
-        searchResults={searchResults}
-        allSongs={allSongs} 
-        albumCovers={[]}  />
-    </div>
+    <Router>
+      <div className="containerPrincipal">
+        <SideMenu />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <MainContent
+                albums={albums}
+                singles={singles}
+                searchTerm={searchTerm}
+                onSearchChange={handleSearchChange}
+                onClearSearch={handleClearSearch}
+                showClearBtn={showClearBtn}
+                searchResults={searchResults}
+                allSongs={allSongs}
+                albumCovers={[]}
+              />
+            }
+          />
+          <Route
+            path="/genres"
+            element={<GenreView genres={genres} />}
+          />
+          
+        </Routes>
+      </div>
+    </Router>
   );
 };
 

@@ -1,7 +1,7 @@
 const MusicPlayer = () => {
   return (
     <div className="musicPlayer">
-      {/* Info canción */}
+
       <div className="leftSection">
         <img src="/images/regida.webp" className="albumCover" alt="Album" />
         <div className="songInfo">
@@ -10,7 +10,6 @@ const MusicPlayer = () => {
         </div>
       </div>
 
-      {/* Controles */}
       <div className="centerSection">
         <div className="controls">
           <button className="controlBtn">⏮</button>
@@ -24,8 +23,6 @@ const MusicPlayer = () => {
           <span className="duration">3:21</span>
         </div>
       </div>
-
-      {/* Volumen */}
       <div className="rightSection">
         <label htmlFor="volumeSlider">🔊</label>
         <input
