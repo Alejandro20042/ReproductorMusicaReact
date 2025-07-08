@@ -10,56 +10,70 @@ body {
 
 .containerPrincipal {
   display: flex;
-  height: 100vh;
-  overflow: hidden;
+  height: 100%;
 }
 
 .sideMenu {
-  width: 160px;
+  width: 130px;
   background-color: #111;
   padding: 20px;
   display: flex;
   flex-direction: column;
   border-right: 2px solid white;
+  gap: 10px;
 }
 
 .sideMenu p {
-  margin: 20px 10px 10px;
+  margin: 20px 0 10px 5px; 
   font-weight: bold;
-  font-size: 14px;
+  font-size: 15px;
 }
+
 
 .sideMenu ol {
   list-style: none;
+  padding-left: 0;
+  margin: 0;
+  
 }
 
 .sideMenu li {
-  margin: 10px 0;
+  margin: 28px 0;
   display: flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
+  align-items:center;
+  gap: 6px;
   font-size: 14px;
-  justify-content: start;
-  margin-bottom: 40px;
-  margin-top: 0px;
+  cursor: pointer;
+}
+
+.sideMenu li img {
+  width: 16px;
+  height: 16px;
+}
+
+.sideMenu a {
+  color: white;
+  text-decoration: none;
 }
 
 .mainContent {
   display: flex;
   flex-direction: column;
-  background-color: #181818;
   flex: 1;
-  border-radius: 0 20px 0 0;
+  background-color: #181818;
   overflow-y: auto;
   overflow-x: hidden;
+  height: 100vh;
+  width: 100%; /* ✅ asegura que use todo el ancho disponible */
 }
 
 .centralView {
   background: #111;
+  flex: 1;
+  min-width: 0;
+  padding: 20px;
+  width: 100%; 
 }
-
-
 .centralView input {
   background-color: #333;
   border: none;
@@ -526,9 +540,12 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* ajusta la imagen sin recortarla */
   filter: brightness(0.85);
   transition: opacity 1s ease-in-out;
 }
+
+
 
 .created-section {
   padding: 20px;
@@ -551,6 +568,7 @@ body {
   width: 100%;
   padding-top: 100%;
   /* 1:1 aspect ratio */
+  aspect-ratio: 1 / 1;
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
@@ -560,7 +578,6 @@ body {
 .album-title-overlay {
   position: absolute;
   bottom: 0;
-  width: 100%;
   padding: 8px;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
   color: white;

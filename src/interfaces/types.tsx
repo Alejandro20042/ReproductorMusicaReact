@@ -65,4 +65,6 @@ export interface SingleSectionProps {
 
 export interface GenreViewProps {
   genres: string[];
+  volverAEscuchar: Album[];
+  escuchadoRecientemente: Album[];
 }

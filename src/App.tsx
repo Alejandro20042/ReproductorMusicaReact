@@ -90,9 +90,15 @@ const App = () => {
           />
           <Route
             path="/genres"
-            element={<GenreView genres={genres} />}
+            element={
+              <GenreView
+                genres={genres}
+                volverAEscuchar={albums.slice(0, 5)} 
+                escuchadoRecientemente={albums.slice(5, 10)} 
+              />
+            }
           />
-          
+
         </Routes>
       </div>
     </Router>
