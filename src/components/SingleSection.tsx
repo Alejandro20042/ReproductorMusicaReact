@@ -1,6 +1,6 @@
 import type { SingleSectionProps } from '../interfaces/types';
 
-const SingleSection = ({ singles }: SingleSectionProps) => {
+const SingleSection = ({ singles, onSelectSong }: SingleSectionProps) => {
   const getImageUrl = (path?: string) =>
     path ? `https://api-musica.netlify.app/${path}` : 'https://via.placeholder.com/40';
 
@@ -9,7 +9,12 @@ const SingleSection = ({ singles }: SingleSectionProps) => {
       <p className="textlastessigle">Lastest Single</p>
       <ol id="singleList">
         {singles.slice(0, 4).map(single => (
-          <li key={single.id} className="albumssingle">
+          <li
+            key={single.id}
+            className="albumssingle"
+            style={{ cursor: "pointer" }}
+            onClick={() => onSelectSong(single)}
+          >
             ▶ <img src={getImageUrl(single.artistaCompleto.imagen)} />
             <strong>{single.titulo}</strong> - {single.artista}{' '}
             <span style={{ fontSize: 12, color: '#aaa' }}>({single.duracion})</span>

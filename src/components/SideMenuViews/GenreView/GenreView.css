@@ -55,14 +55,13 @@
   gap: 20px;
 }
 
-/* 🎵 Álbum card cuadrada estilo Spotify */
 .album-card {
   background-color: #222;
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  aspect-ratio: 1 / 1; /* 🔲 cuadrada */
+  aspect-ratio: 1 / 1; 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -100,4 +99,98 @@
   font-size: 13px;
   color: #aaa;
   margin-top: 5px;
+}
+
+.genre-view-container {
+  padding: 30px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #121212;
+  color: #eee;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.genres-section {
+  margin-bottom: 40px;
+}
+
+.genres-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.genre-item {
+  background-color: #282828;
+  padding: 10px 20px;
+  border-radius: 25px;
+  user-select: none;
+  transition: background-color 0.3s, color 0.3s;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.genre-item:hover {
+  background-color: black;
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.genre-item.active,
+.genre-item[style*="font-weight: bold"] {
+  background-color: none;
+  color: white;
+  font-weight: 700;
+  box-shadow: 0 0 10px #1db954;
+}
+
+.songs-by-genre {
+  background-color: #181818;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 40px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.5);
+}
+
+.songs-by-genre h2 {
+  margin-bottom: 15px;
+  color: #1db954;
+}
+
+.songs-by-genre ul {
+  list-style: none;
+  padding: 0;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.songs-by-genre ul li {
+  padding: 8px 12px;
+  border-bottom: 1px solid #333;
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  color: #ccc;
+  transition: background-color 0.2s;
+}
+
+.songs-by-genre ul li:hover {
+  background-color: #2a2a2a;
+  color: white;
+}
+
+.songs-by-genre ul::-webkit-scrollbar {
+  width: 6px;
+}
+
+.songs-by-genre ul::-webkit-scrollbar-track {
+  background: #121212;
+}
+
+.songs-by-genre ul::-webkit-scrollbar-thumb {
+  background-color: #1db954;
+  border-radius: 3px;
 }

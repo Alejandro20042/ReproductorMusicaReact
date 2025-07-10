@@ -1,8 +1,9 @@
+import { useState } from 'react';
+import type { MainContentProps, Song } from '../interfaces/types';
 import SearchBar from './SearchBar';
 import AlbumSection from './AlbumSection';
 import SingleSection from './SingleSection';
 import MusicPlayer from './MusicPlayer';
-import type { MainContentProps } from '../interfaces/types';
 import CreatedForUsers from './CreatedForUsers';
 import BackgroundCarousel from './BackgroundCarousel';
 
@@ -17,6 +18,7 @@ const MainContent = ({
   searchResults,
   allSongs,
 }: MainContentProps) => {
+  const [cancionSeleccionada, setCancionSeleccionada] = useState<Song | null>(null);
   return (
     <div className="mainContent">
       <div className="centralView">
@@ -47,11 +49,11 @@ const MainContent = ({
       </div>
 
       <div className="containeralbumformmain">
-        <AlbumSection albums={albums} />
-        <SingleSection singles={singles} />
+        <AlbumSection albums={albums} canciones={allSongs} onSelectSong={setCancionSeleccionada} />
+        <SingleSection singles={singles} onSelectSong={setCancionSeleccionada} />
       </div>
       <CreatedForUsers songs={allSongs} />
-      <MusicPlayer />
+      <MusicPlayer canciones={allSongs} cancionInicial={cancionSeleccionada} />
     </div>
   );
 };

@@ -6,7 +6,7 @@ export interface Album {
   añoLanzamiento: number;
   portada?: string;           
   descripcion?: string;       
-  
+  genero?: string; 
 }
 
 export interface Artist {
@@ -51,20 +51,29 @@ export interface MainContentProps {
   albumCovers: string[];
 }
 
-export interface AlbumSectionProps {
-  albums: Album[];
-}
-
 export interface CreatedForUsersProps {
   songs: Song[];
 }
 
+export interface AlbumSectionProps {
+  albums: Album[];
+  canciones: Song[];
+  onSelectSong: (song: Song) => void;
+}
+
 export interface SingleSectionProps {
   singles: Song[];
+  onSelectSong: (song: Song) => void;
 }
 
 export interface GenreViewProps {
   genres: string[];
   volverAEscuchar: Album[];
   escuchadoRecientemente: Album[];
+  canciones: Song[]
+}
+
+export interface MusicPlayerProps {
+  canciones: Song[];
+  cancionInicial?: Song | null;
 }
