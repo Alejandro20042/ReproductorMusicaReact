@@ -77,3 +77,7 @@ export interface MusicPlayerProps {
   canciones: Song[];
   cancionInicial?: Song | null;
 }
+
+export interface TopChartsViewProps {
+  songs: Song[];
+}

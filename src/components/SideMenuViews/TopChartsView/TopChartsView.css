@@ -1,0 +1,51 @@
+.top-charts-container {
+  padding: 30px;
+  background-color: #121212;
+  color: white;
+  font-family: 'Segoe UI', sans-serif;
+  overflow-y: auto;    
+}
+
+.top-charts-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.top-charts-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  
+}
+
+.top-chart-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+  background-color: #1e1e1e;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.top-chart-item img {
+  width: 60px;
+  height: 60px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.song-info {
+  flex: 1;
+}
+
+.position {
+  font-size: 18px;
+  width: 24px;
+  text-align: center;
+}
+
+.duration {
+  font-size: 14px;
+  color: #aaa;
+}

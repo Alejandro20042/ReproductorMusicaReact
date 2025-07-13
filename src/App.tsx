@@ -5,6 +5,8 @@ import SideMenu from './components/SideMenu';
 import "./styles/style.css"
 import type { Song } from './interfaces/types';
 import GenreView from './components/SideMenuViews/GenreView/GenreView';
+import TopChartsView from './components/SideMenuViews/TopChartsView/TopChartsView';
+import MusicPlayer from './components/MusicPlayer';
 
 const App = () => {
   const [allSongs, setAllSongs] = useState<Song[]>([]);
@@ -93,15 +95,15 @@ const App = () => {
             element={
               <GenreView
                 genres={genres}
-                volverAEscuchar={albums.slice(0, 5)} 
-                escuchadoRecientemente={albums.slice(5, 10)} 
+                volverAEscuchar={albums.slice(0, 5)}
+                escuchadoRecientemente={albums.slice(5, 10)}
                 canciones={allSongs}
               />
-               
             }
           />
-
+          <Route path="/topcharts" element={<TopChartsView songs={allSongs} />} />
         </Routes>
+
         
       </div>
     </Router>
