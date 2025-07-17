@@ -1,48 +1,59 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import "./styles/style.css";
+
+import Layout from './components/Layout';
 import MainContent from './components/MainContent';
-import SideMenu from './components/SideMenu';
-import "./styles/style.css"
-import type { Song } from './interfaces/types';
 import GenreView from './components/SideMenuViews/GenreView/GenreView';
 import TopChartsView from './components/SideMenuViews/TopChartsView/TopChartsView';
-import MusicPlayer from './components/MusicPlayer';
+
+import type { Song } from './interfaces/types';
+import { FavoritesProvider } from './contexts/FavoritesContext';
+import FavoritosView from './components/SideMenuViews/FavoritesView/FavoritesView';
+import PageNotReady from './components/PageNotReady';
 
 const App = () => {
   const [allSongs, setAllSongs] = useState<Song[]>([]);
   const [albums, setAlbums] = useState<{ id: string | number; titulo: string; añoLanzamiento: number }[]>([]);
   const [singles, setSingles] = useState<Song[]>([]);
+  const [genres, setGenres] = useState<string[]>([]);
+  const [albumCovers, setAlbumCovers] = useState<string[]>([]);
+
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState<Song[]>([]);
   const [showClearBtn, setShowClearBtn] = useState(false);
-  const [genres, setGenres] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch('https://api-musica.netlify.app/api/canciones');
-        const data = await res.json();
-        setAllSongs(data.data);
-
-        fetch('https://api-musica.netlify.app/api/generos')
-          .then(res => res.json())
-          .then(data => setGenres(data.data))
-          .catch(err => console.error('Error fetching genres:', err));
+        setLoading(true);
+        const resSongs = await fetch('https://api-musica.netlify.app/api/canciones');
+        const dataSongs = await resSongs.json();
+        setAllSongs(dataSongs.data);
 
         const uniqueAlbumsMap = new Map();
-        data.data.forEach((song: Song) => {
+        dataSongs.data.forEach((song: Song) => {
           if (!uniqueAlbumsMap.has(song.albumCompleto.id)) {
             uniqueAlbumsMap.set(song.albumCompleto.id, song.albumCompleto);
           }
         });
         setAlbums(Array.from(uniqueAlbumsMap.values()));
+        setSingles(dataSongs.data);
 
-        setSingles(data.data);
+        const resGenres = await fetch('https://api-musica.netlify.app/api/generos');
+        const dataGenres = await resGenres.json();
+        setGenres(dataGenres.data);
+
+        const covers = Array.from(uniqueAlbumsMap.values()).map(album => album.portada || '');
+        setAlbumCovers(covers);
       } catch (error) {
-        console.error(error);
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
       }
     }
-
     fetchData();
   }, []);
 
@@ -62,7 +73,6 @@ const App = () => {
   }, [searchTerm, allSongs]);
 
   const handleSearchChange = (value: string) => setSearchTerm(value);
-
   const handleClearSearch = () => {
     setSearchTerm('');
     setSearchResults([]);
@@ -70,12 +80,12 @@ const App = () => {
   };
 
   return (
+    <FavoritesProvider>
     <Router>
-      <div className="containerPrincipal">
-        <SideMenu />
-        <Routes>
+      <Routes>
+        <Route path="/" element={<Layout canciones={allSongs} />}>
           <Route
-            path="/"
+            index
             element={
               <MainContent
                 albums={albums}
@@ -86,12 +96,14 @@ const App = () => {
                 showClearBtn={showClearBtn}
                 searchResults={searchResults}
                 allSongs={allSongs}
-                albumCovers={[]}
+                albumCovers={albumCovers}
+                genres={genres}
+                loading={loading}
               />
             }
           />
           <Route
-            path="/genres"
+            path="genres"
             element={
               <GenreView
                 genres={genres}
@@ -101,13 +113,15 @@ const App = () => {
               />
             }
           />
-          <Route path="/topcharts" element={<TopChartsView songs={allSongs} />} />
-        </Routes>
-
-        
-      </div>
+          <Route path="topcharts" element={<TopChartsView songs={allSongs}/>}/>
+          <Route path="/favorites" element={<FavoritosView/>}/>
+          <Route path='/podcast' element={<PageNotReady/>}/>
+        </Route>
+      </Routes>
     </Router>
+    </FavoritesProvider>
   );
 };
 
 export default App;
+

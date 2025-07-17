@@ -1,12 +1,10 @@
-// src/interfaces/types.ts
-
 export interface Album {
   id: string | number;
   titulo: string;
   añoLanzamiento: number;
-  portada?: string;           
-  descripcion?: string;       
-  genero?: string; 
+  portada?: string;
+  descripcion?: string;
+  genero?: string;
 }
 
 export interface Artist {
@@ -21,8 +19,8 @@ export interface Song {
   duracion: string;
   artista: string;
   albumCompleto: Album;
-  artistaCompleto: Artist;  
-  imagen?: string;                          
+  artistaCompleto: Artist;
+  imagen?: string;
 }
 
 export interface Single extends Song {
@@ -49,6 +47,8 @@ export interface MainContentProps {
   searchResults: Song[];
   allSongs: Song[];
   albumCovers: string[];
+  genres: string[];
+  loading?: boolean;
 }
 
 export interface CreatedForUsersProps {
@@ -80,4 +80,27 @@ export interface MusicPlayerProps {
 
 export interface TopChartsViewProps {
   songs: Song[];
+}
+
+export interface LayoutProps {
+  canciones: Song[];
+  cancionInicial?: Song | null;
+}
+export type OutletContextType = {
+  canciones: Song[];
+  cancionSeleccionada: Song | null;
+  setCancionSeleccionada: (song: Song | null) => void;
+};
+
+export interface Favorito {
+  id: string;
+  title: string;
+  artist: string;
+  cover: string;
+}
+
+export interface FavoritesContextType {
+  favoritos: Favorito[];
+  toggleFavorito: (item: Favorito) => void;
+  isFavorito: (id: string) => boolean;
 }

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import type { MusicPlayerProps, Song } from "../interfaces/types";
+import { useFavorites } from "../contexts/FavoritesContext";
 
 const MusicPlayer = ({ canciones, cancionInicial = null }: MusicPlayerProps) => {
   const [cancionActual, setCancionActual] = useState<Song | null>(cancionInicial);
@@ -7,18 +8,22 @@ const MusicPlayer = ({ canciones, cancionInicial = null }: MusicPlayerProps) => 
   const [tiempoActual, setTiempoActual] = useState(0);
   const intervaloRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
+  const { toggleFavorito, isFavorito } = useFavorites();
+const favorito = cancionActual ? isFavorito(cancionActual.id.toString()) : false;
+
   useEffect(() => {
     setCancionActual(cancionInicial);
     setTiempoActual(0);
     setReproduciendo(false);
   }, [cancionInicial]);
 
-  const duracionEnSegundos = (duracion: string) => {
+  const duracionEnSegundos = (duracion: string | number): number => {
+    if (typeof duracion === "number") return duracion;
     const [min, seg] = duracion.split(":").map(Number);
     return min * 60 + seg;
   };
 
-  const formatearTiempo = (segundos: number) => {
+  const formatearTiempo = (segundos: number): string => {
     const min = Math.floor(segundos / 60);
     const seg = segundos % 60;
     return `${min}:${seg < 10 ? "0" : ""}${seg}`;
@@ -27,8 +32,9 @@ const MusicPlayer = ({ canciones, cancionInicial = null }: MusicPlayerProps) => 
   useEffect(() => {
     if (reproduciendo && cancionActual) {
       intervaloRef.current = setInterval(() => {
-        setTiempoActual(prev => {
-          if (prev >= duracionEnSegundos(cancionActual.duracion)) {
+        setTiempoActual((prev) => {
+          const durSeg = duracionEnSegundos(cancionActual.duracion);
+          if (prev >= durSeg) {
             clearInterval(intervaloRef.current!);
             setReproduciendo(false);
             return prev;
@@ -44,47 +50,87 @@ const MusicPlayer = ({ canciones, cancionInicial = null }: MusicPlayerProps) => 
 
   const togglePlay = () => {
     if (!cancionActual) return;
-    setReproduciendo(prev => !prev);
+    setReproduciendo((prev) => !prev);
   };
 
   const getImageUrl = (path?: string) =>
-    path ? `https://api-musica.netlify.app/${path}`:"";
+    path ? `https://api-musica.netlify.app/${path}` : "";
+
+  const duracionSegundos = cancionActual
+    ? duracionEnSegundos(cancionActual.duracion)
+    : 0;
 
   return (
     <div className="musicPlayer">
-
-      <div className="leftSection">
+      <div className="leftSection" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
         <img
           src={getImageUrl(cancionActual?.artistaCompleto.imagen)}
           className="albumCover"
           alt={cancionActual?.albumCompleto.titulo || "Album"}
         />
-        <div className="songInfo">
-          <div className="songTitle">{cancionActual?.titulo || "Selecciona una canción"}</div>
+        <div className="songInfo" style={{ flex: 1 }}>
+          <div className="songTitle">
+            {cancionActual?.titulo || "Selecciona una canción"}
+          </div>
           <div className="artistName">{cancionActual?.artista || ""}</div>
         </div>
+
+        <button
+          onClick={() =>
+            cancionActual &&
+            toggleFavorito({
+              id: cancionActual.id.toString(),
+              title: cancionActual.titulo,
+              artist: cancionActual.artista,
+              cover: cancionActual.albumCompleto.portada || "",
+            })
+          }
+          style={{
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            fontSize: "24px",
+            color: favorito ? "red" : "white",
+            padding: 0,
+            marginLeft: "10px",
+          }}
+          aria-label={favorito ? "Quitar de favoritos" : "Agregar a favoritos"}
+          title={favorito ? "Quitar de favoritos" : "Agregar a favoritos"}
+        >
+          {favorito ? "❤️" : "🤍"}
+        </button>
+
       </div>
 
       <div className="centerSection">
         <div className="controls">
-          <button className="controlBtn" onClick={() => {
-
-            if (!cancionActual) return;
-            const idx = canciones.findIndex(c => c.id === cancionActual.id);
-            const prevIdx = idx > 0 ? idx - 1 : canciones.length - 1;
-            setCancionActual(canciones[prevIdx]);
-          }}>⏮</button>
+          <button
+            className="controlBtn"
+            onClick={() => {
+              if (!cancionActual) return;
+              const idx = canciones.findIndex((c) => c.id === cancionActual.id);
+              const prevIdx = idx > 0 ? idx - 1 : canciones.length - 1;
+              setCancionActual(canciones[prevIdx]);
+            }}
+          >
+            ⏮
+          </button>
 
           <button className="controlBtn" onClick={togglePlay}>
             {reproduciendo ? "⏸" : "▶"}
           </button>
 
-          <button className="controlBtn" onClick={() => {
-            if (!cancionActual) return;
-            const idx = canciones.findIndex(c => c.id === cancionActual.id);
-            const nextIdx = idx < canciones.length - 1 ? idx + 1 : 0;
-            setCancionActual(canciones[nextIdx]);
-          }}>⏭</button>
+          <button
+            className="controlBtn"
+            onClick={() => {
+              if (!cancionActual) return;
+              const idx = canciones.findIndex((c) => c.id === cancionActual.id);
+              const nextIdx = idx < canciones.length - 1 ? idx + 1 : 0;
+              setCancionActual(canciones[nextIdx]);
+            }}
+          >
+            ⏭
+          </button>
         </div>
 
         <div className="progressBarContainer">
@@ -92,9 +138,9 @@ const MusicPlayer = ({ canciones, cancionInicial = null }: MusicPlayerProps) => 
           <progress
             id="progressBar"
             value={tiempoActual}
-            max={cancionActual ? duracionEnSegundos(cancionActual.duracion) : 100}
+            max={duracionSegundos}
           />
-          <span className="duration">{cancionActual?.duracion || "0:00"}</span>
+          <span className="duration">{formatearTiempo(duracionSegundos)}</span>
         </div>
       </div>
 
@@ -110,7 +156,6 @@ const MusicPlayer = ({ canciones, cancionInicial = null }: MusicPlayerProps) => 
           onChange={() => {}}
         />
       </div>
-
     </div>
   );
 };
