@@ -5,6 +5,7 @@ import SearchBar from './SearchBar';
 import AlbumSection from './AlbumSection';
 import SingleSection from './SingleSection';
 import BackgroundCarousel from './BackgroundCarousel';
+import LoadingScreen from './LoadingScreen/LoadingScreen';
 
 const MainContent = ({
   albums,
@@ -21,16 +22,7 @@ const MainContent = ({
   if (!outletContext) return null;
   const { setCancionSeleccionada } = outletContext;
 
-  if (loading) {
-    return (
-      <div className="spinner-container">
-        <div className="spinner-content">
-          <p>Cargando contenido, por favor espera...</p>
-          <div className="spinner"></div>
-        </div>
-      </div>
-    );
-  }
+  if (loading) return <LoadingScreen />;
 
   return (
     <div className="mainContent">

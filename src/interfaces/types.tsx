@@ -70,7 +70,8 @@ export interface GenreViewProps {
   genres: string[];
   volverAEscuchar: Album[];
   escuchadoRecientemente: Album[];
-  canciones: Song[]
+  canciones: Song[];
+  loading?: boolean;
 }
 
 export interface MusicPlayerProps {

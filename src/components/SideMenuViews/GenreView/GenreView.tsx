@@ -1,8 +1,10 @@
 import { useState } from "react";
 import type { GenreViewProps } from "../../../interfaces/types";
 import "./GenreView.css";
+import LoadingScreen from "../../LoadingScreen/LoadingScreen";
 
-function GenreView({ genres, volverAEscuchar, escuchadoRecientemente, canciones }: GenreViewProps) {
+
+function GenreView({ genres, volverAEscuchar, escuchadoRecientemente, canciones, loading = false }: GenreViewProps) {
   const [generoSeleccionado, setGeneroSeleccionado] = useState<string | null>(null);
   const baseUrl = "https://api-musica.netlify.app/";
 
@@ -14,6 +16,8 @@ function GenreView({ genres, volverAEscuchar, escuchadoRecientemente, canciones 
     if (!path) return undefined;
     return `${baseUrl}${path}`.replace(/'/g, "%27").replace(/ /g, "%20");
   };
+
+  if (loading) return <LoadingScreen />;
 
   return (
     <div className="genre-view-container">

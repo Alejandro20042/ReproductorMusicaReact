@@ -4,10 +4,8 @@
   font-family: 'Segoe UI', sans-serif;
   background-color: #181818;
   color: white;
-  height: 100vh;       
-  overflow-y: auto;    
-  box-sizing: border-box; 
-  overflow: hidden;
+  box-sizing: border-box;
+  overflow: visible;
 }
 
 .genres-section {
@@ -98,15 +96,6 @@
   font-size: 13px;
   color: #aaa;
   margin-top: 5px;
-}
-
-.genre-view-container {
-  padding: 30px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #121212;
-  color: #eee;
-  max-width: 1200px;
-  margin: 0 auto;
 }
 
 .genres-section {

@@ -110,6 +110,7 @@ const App = () => {
                 volverAEscuchar={albums.slice(0, 5)}
                 escuchadoRecientemente={albums.slice(5, 10)}
                 canciones={allSongs}
+                loading= {loading}
               />
             }
           />

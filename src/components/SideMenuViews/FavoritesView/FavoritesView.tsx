@@ -7,7 +7,7 @@ const FavoritosView = () => {
   return (
     <div className="favoritos-container">
       <h2 className="favoritos-title">Tus Favoritos</h2>
-
+    
       {favoritos.length === 0 ? (
         <p className="favoritos-empty">No has agregado canciones a favoritos.</p>
       ) : (
