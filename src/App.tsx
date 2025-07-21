@@ -114,7 +114,7 @@ const App = () => {
               />
             }
           />
-          <Route path="topcharts" element={<TopChartsView songs={allSongs}/>}/>
+          <Route path="topcharts" element={<TopChartsView />}/>
           <Route path="/favorites" element={<FavoritosView/>}/>
           <Route path='/podcast' element={<PageNotReady/>}/>
         </Route>

@@ -81,12 +81,15 @@ export interface MusicPlayerProps {
 
 export interface TopChartsViewProps {
   songs: Song[];
+  onSelectSong: (song: Song) => void;
 }
 
 export interface LayoutProps {
   canciones: Song[];
   cancionInicial?: Song | null;
+  setCancionSeleccionada?: (cancion: Song | null) => void;
 }
+
 export type OutletContextType = {
   canciones: Song[];
   cancionSeleccionada: Song | null;

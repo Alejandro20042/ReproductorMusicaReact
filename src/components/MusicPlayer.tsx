@@ -9,7 +9,7 @@ const MusicPlayer = ({ canciones, cancionInicial = null }: MusicPlayerProps) => 
   const intervaloRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const { toggleFavorito, isFavorito } = useFavorites();
-const favorito = cancionActual ? isFavorito(cancionActual.id.toString()) : false;
+  const favorito = cancionActual ? isFavorito(cancionActual.id.toString()) : false;
 
   useEffect(() => {
     setCancionActual(cancionInicial);

@@ -1,10 +1,18 @@
-import React, { createContext, useContext, useState, type ReactNode } from "react";
+import React, { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import type { FavoritesContextType, Favorito } from "../interfaces/types";
 
 const FavoritesContext = createContext<FavoritesContextType | undefined>(undefined);
 
 export const FavoritesProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [favoritos, setFavoritos] = useState<Favorito[]>([]);
+    const [favoritos, setFavoritos] = useState<Favorito[]>(() => {
+        const favoritosGuardados = localStorage.getItem("favoritos");
+        const parsedArray = favoritosGuardados ? JSON.parse(favoritosGuardados) : [];
+        return parsedArray;
+    });
+
+    useEffect(() => {
+        localStorage.setItem("favoritos", JSON.stringify(favoritos));
+    }, [favoritos]);
 
     // Función para alternar un ítem de favoritos
     const toggleFavorito = (item: Favorito) => {
