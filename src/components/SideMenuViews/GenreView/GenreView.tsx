@@ -1,11 +1,13 @@
 import { useState } from "react";
-import type { GenreViewProps } from "../../../interfaces/types";
+import type { GenreViewProps, OutletContextType } from "../../../interfaces/types";
 import "./GenreView.css";
 import LoadingScreen from "../../LoadingScreen/LoadingScreen";
+import { useOutletContext } from "react-router-dom";
 
 
 function GenreView({ genres, volverAEscuchar, escuchadoRecientemente, canciones, loading = false }: GenreViewProps) {
   const [generoSeleccionado, setGeneroSeleccionado] = useState<string | null>(null);
+  const { setCancionSeleccionada } = useOutletContext<OutletContextType>();
   const baseUrl = "https://api-musica.netlify.app/";
 
   const cancionesFiltradas = generoSeleccionado ? canciones.filter((c) =>
@@ -49,7 +51,9 @@ function GenreView({ genres, volverAEscuchar, escuchadoRecientemente, canciones,
           {cancionesFiltradas.length > 0 ? (
             <ul>
               {cancionesFiltradas.map((c) => (
-                <li key={c.id}>
+                <li key={c.id}
+                onClick={() => setCancionSeleccionada(c)}
+                style={{ cursor: "pointer" }}>
                   🎵 {c.titulo} — {c.duracion}
                 </li>
               ))}

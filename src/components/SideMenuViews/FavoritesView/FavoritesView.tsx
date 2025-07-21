@@ -1,24 +1,30 @@
 import { useOutletContext } from "react-router-dom";
 import { useFavorites } from "../../../contexts/FavoritesContext";
-import type { OutletContextType } from "../../../interfaces/types";
 import "./FavoritesView.css";
+import type { OutletContextType } from "../../../interfaces/types";
 
 const FavoritosView = () => {
   const { favoritos, toggleFavorito } = useFavorites();
-  const { setCancionSeleccionada } = useOutletContext<OutletContextType>();
-
+  const { setCancionSeleccionada, canciones } = useOutletContext<OutletContextType>();
 
   return (
     <div className="favoritos-container">
       <h2 className="favoritos-title">Tus Favoritos</h2>
-    
+
       {favoritos.length === 0 ? (
         <p className="favoritos-empty">No has agregado canciones a favoritos.</p>
       ) : (
         <ul className="favoritos-list">
-            {favoritos.map((cancion) => (
-              <li key={cancion.id} className="favorito-item"
-                style={{ cursor: "pointer" }}>
+          {favoritos.map((cancion) => (
+            <li key={cancion.id} className="favorito-item"
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                const cancionCompleta = canciones.find((c) => c.id.toString() === cancion.id.toString());
+                if (cancionCompleta) {
+                  console.log("Seleccionando canción:", cancionCompleta);
+                  setCancionSeleccionada(cancionCompleta);
+                }
+              }}>
               <img
                 src={`https://api-musica.netlify.app/${cancion.cover}`}
                 alt={cancion.title}
