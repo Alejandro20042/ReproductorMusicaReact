@@ -1,0 +1,81 @@
+.playlists-container {
+  padding: 2.5rem 3rem;
+  color: #fff;
+  background: linear-gradient(135deg, #121212 0%, #1d1d1d 100%);
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.playlists-title {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-align: center;
+  color: #1db954; /* Spotify green */
+  text-shadow: 0 0 10px rgba(29, 185, 84, 0.7);
+}
+
+.playlists-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.playlist-card {
+  background-color: #282828;
+  border-radius: 15px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem 1.2rem;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  user-select: none;
+}
+
+.playlist-card:hover {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 15px 30px rgba(29, 185, 84, 0.6);
+  background-color: #1db954;
+  color: #fff;
+}
+
+.playlist-image-placeholder {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #1db954 0%, #14833b 100%);
+  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.15);
+  font-size: 3.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  margin-bottom: 1rem;
+  user-select: none;
+}
+
+.playlist-name {
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-align: center;
+  margin: 0;
+  letter-spacing: 0.03em;
+  line-height: 1.2;
+}
+
+.playlist-count {
+  font-size: 0.9rem;
+  color: #b3b3b3;
+  margin-top: 0.3rem;
+  transition: color 0.25s ease;
+}
+
+.playlist-card:hover .playlist-count {
+  color: #d1f7d1;
+}

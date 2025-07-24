@@ -1,0 +1,139 @@
+/* AddToPlaylistMenu.css */
+
+.playlist-menu {
+  position: absolute;
+  background: #121212;
+  border: 1px solid #1db954;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  color: #fff;
+  list-style: none;
+  padding: 8px 0;
+  margin: 0;
+  z-index: 1000;
+  min-width: 180px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.playlist-menu li {
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.15s ease-in-out;
+}
+
+.playlist-menu li:hover {
+  background-color: #1db954;
+  color: #121212;
+  font-weight: 600;
+}
+
+/* GenreView.css (añade o modifica lo siguiente para que encaje) */
+
+.genre-view-container {
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #eee;
+  background-color: #181818;
+  min-height: 100vh;
+}
+
+.genres-section h2,
+.songs-by-genre h2,
+.album-section h2 {
+  color: #1db954;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.genres-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-left: 0;
+  list-style: none;
+}
+
+.genre-item {
+  padding: 8px 14px;
+  background-color: #282828;
+  border-radius: 20px;
+  user-select: none;
+  transition: background-color 0.3s ease;
+}
+
+.genre-item:hover {
+  background-color: #1db954;
+  color: #121212;
+}
+
+.songs-by-genre ul {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 10px;
+}
+
+.songs-by-genre li {
+  padding: 6px 10px;
+  border-bottom: 1px solid #333;
+  user-select: none;
+}
+
+.songs-by-genre li:hover {
+  background-color: #282828;
+  color: #1db954;
+}
+
+/* Opcional: evita que el texto sea seleccionado al hacer click derecho */
+.songs-by-genre li {
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+
+/* Album grid styles (ya tenías, solo ajuste para armonía) */
+
+.album-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(140px,1fr));
+  gap: 16px;
+  margin-top: 10px;
+}
+
+.album-card {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
+}
+
+.album-card:hover {
+  transform: scale(1.05);
+}
+
+.album-info {
+  background-color: rgba(0,0,0,0.6);
+  color: white;
+  padding: 8px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 0 0 10px 10px;
+  text-align: center;
+}
+
+.album-title {
+  font-weight: 600;
+  margin: 0;
+}
+
+.album-year {
+  font-size: 12px;
+  margin: 0;
+  opacity: 0.8;
+}
+
+

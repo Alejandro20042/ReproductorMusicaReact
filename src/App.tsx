@@ -11,6 +11,9 @@ import type { Song } from './interfaces/types';
 import { FavoritesProvider } from './contexts/FavoritesContext';
 import FavoritosView from './components/SideMenuViews/FavoritesView/FavoritesView';
 import PageNotReady from './components/PageNotReady';
+import { PlaylistProvider } from './contexts/PlaylistContext';
+import SinglePlaylistView from './components/SideMenuViews/PlaylistView/SinglePlaylistView';
+import PlaylistsView from './components/SideMenuViews/PlaylistView/PlaylistsView';
 
 const App = () => {
   const [allSongs, setAllSongs] = useState<Song[]>([]);
@@ -81,45 +84,49 @@ const App = () => {
 
   return (
     <FavoritesProvider>
-    <Router>
-      <Routes>
-        <Route path="/" element={<Layout canciones={allSongs} />}>
-          <Route
-            index
-            element={
-              <MainContent
-                albums={albums}
-                singles={singles}
-                searchTerm={searchTerm}
-                onSearchChange={handleSearchChange}
-                onClearSearch={handleClearSearch}
-                showClearBtn={showClearBtn}
-                searchResults={searchResults}
-                allSongs={allSongs}
-                albumCovers={albumCovers}
-                genres={genres}
-                loading={loading}
+      <PlaylistProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Layout canciones={allSongs} />}>
+              <Route
+                index
+                element={
+                  <MainContent
+                    albums={albums}
+                    singles={singles}
+                    searchTerm={searchTerm}
+                    onSearchChange={handleSearchChange}
+                    onClearSearch={handleClearSearch}
+                    showClearBtn={showClearBtn}
+                    searchResults={searchResults}
+                    allSongs={allSongs}
+                    albumCovers={albumCovers}
+                    genres={genres}
+                    loading={loading}
+                  />
+                }
               />
-            }
-          />
-          <Route
-            path="genres"
-            element={
-              <GenreView
-                genres={genres}
-                volverAEscuchar={albums.slice(0, 5)}
-                escuchadoRecientemente={albums.slice(5, 10)}
-                canciones={allSongs}
-                loading= {loading}
+              <Route
+                path="genres"
+                element={
+                  <GenreView
+                    genres={genres}
+                    volverAEscuchar={albums.slice(0, 5)}
+                    escuchadoRecientemente={albums.slice(5, 10)}
+                    canciones={allSongs}
+                    loading={loading}
+                  />
+                }
               />
-            }
-          />
-          <Route path="topcharts" element={<TopChartsView />}/>
-          <Route path="/favorites" element={<FavoritosView/>}/>
-          <Route path='/podcast' element={<PageNotReady/>}/>
-        </Route>
-      </Routes>
-    </Router>
+              <Route path="topcharts" element={<TopChartsView />} />
+              <Route path="/favorites" element={<FavoritosView />} />
+              <Route path="/playlist" element={<PlaylistsView />} />
+              <Route path="/playlist/:id" element={<SinglePlaylistView />} />
+              <Route path='/podcast' element={<PageNotReady />} />
+            </Route>
+          </Routes>
+        </Router>
+      </PlaylistProvider>
     </FavoritesProvider>
   );
 };
