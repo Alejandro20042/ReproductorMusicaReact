@@ -12,36 +12,58 @@ const SinglePlaylistView = () => {
   const playlist = playlists.find((p) => p.id === id);
 
   if (!playlist) {
-    return <div className="playlist-notfound">Playlist no encontrada</div>;
+    return <div className="playlist-notfound">🎧 Playlist no encontrada</div>;
   }
 
-  return (
-    <div className="playlist-container">
-      <h2 className="playlist-title">{playlist.nombre}</h2>
+  const handlePlayAll = () => {
+    if (playlist.canciones.length > 0) {
+      setCancionSeleccionada(playlist.canciones[0]);
+    }
+  };
 
-      {playlist.canciones.length === 0 ? (
-        <p className="playlist-empty">Esta playlist no tiene canciones aún.</p>
-      ) : (
-        <ul className="playlist-list">
-          {playlist.canciones.map((cancion) => (
-            <li
-              key={cancion.id}
-              className="playlist-item"
-              onClick={() => setCancionSeleccionada(cancion)}
-            >
-              <img
-                src={`https://api-musica.netlify.app/${cancion.albumCompleto.portada}`}
-                alt={cancion.titulo}
-                className="playlist-thumb"
-              />
-              <div className="playlist-details">
-                <p className="playlist-title">{cancion.titulo}</p>
-                <p className="playlist-artist">{cancion.artista}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
+  return (
+    <div className="playlist-page">
+      <div className="playlist-header">
+        <div className="playlist-cover">
+          <img
+            src={`https://api-musica.netlify.app/${playlist.canciones[0]?.albumCompleto.portada}`}
+            alt={playlist.nombre}
+          />
+        </div>
+        <div className="playlist-info">
+          <h2>{playlist.nombre}</h2>
+          <p>{playlist.canciones.length} canciones</p>
+          <button className="play-button" onClick={handlePlayAll}>
+            ▶ Reproducir todas
+          </button>
+        </div>
+      </div>
+
+      <div className="playlist-content">
+        {playlist.canciones.length === 0 ? (
+          <p className="playlist-empty">Esta playlist no tiene canciones aún.</p>
+        ) : (
+          <ul className="song-list">
+            {playlist.canciones.map((cancion) => (
+              <li
+                key={cancion.id}
+                className="song-card"
+                onClick={() => setCancionSeleccionada(cancion)}
+              >
+                <img
+                  src={`https://api-musica.netlify.app/${cancion.albumCompleto.portada}`}
+                  alt={cancion.titulo}
+                  className="song-thumb"
+                />
+                <div className="song-info">
+                  <p className="song-title">{cancion.titulo}</p>
+                  <p className="song-artist">{cancion.artista}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 };
