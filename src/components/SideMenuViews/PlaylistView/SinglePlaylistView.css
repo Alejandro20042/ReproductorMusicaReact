@@ -1,13 +1,20 @@
 .playlist-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;  /* Esto es importante para que la altura esté bien definida */
   padding: 2rem;
   color: #fff;
+  box-sizing: border-box;
+  /* Evita doble scroll */
 }
+
 
 .playlist-header {
   display: flex;
   gap: 2rem;
   margin-bottom: 2rem;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .playlist-cover img {
@@ -46,6 +53,8 @@
 
 .playlist-content {
   margin-top: 1rem;
+  flex: 1;
+  
 }
 
 .song-list {
@@ -59,8 +68,11 @@
   align-items: center;
   background-color: #1e1e1e;
   padding: 0.75rem 1rem;
+  width: 100%;
+  max-width: 65rem;
   border-radius: 8px;
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 .song-card:hover {
@@ -99,4 +111,73 @@
   color: #ccc;
   font-size: 1.1rem;
   margin-top: 2rem;
+}
+
+/* ---------------- RESPONSIVE ---------------- */
+
+@media (max-width: 768px) {
+  .playlist-header {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .playlist-info h2 {
+    font-size: 1.5rem;
+    margin-top: 1rem;
+  }
+
+
+  .playlist-cover img {
+    width: 140px;
+    height: 140px;
+  }
+
+  .song-card {
+    flex-direction: row;
+    width: 100%;
+  }
+
+  .song-thumb {
+    width: 50px;
+    height: 50px;
+  }
+
+  .song-title {
+    font-size: 1rem;
+  }
+
+  .song-artist {
+    font-size: 0.85rem;
+  }
+
+
+  .playlist-content {
+    overflow-y: auto;
+    padding-right: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .playlist-info h2 {
+    font-size: 1.2rem;
+  }
+
+  .playlist-info p {
+    font-size: 0.9rem;
+  }
+
+  .song-title {
+    font-size: 0.95rem;
+  }
+
+  .song-artist {
+    font-size: 0.8rem;
+  }
+
+  .play-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
 }

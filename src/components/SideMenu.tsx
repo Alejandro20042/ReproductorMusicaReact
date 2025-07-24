@@ -13,7 +13,7 @@ const SideMenu = () => {
       </button>
 
       <div className={`sideMenu ${abierto ? 'abierto' : 'cerrado'}`}>
-        <p className="browserMenu">Browser</p>
+        <p className="browserMenu">App Music</p>
         <ol>
           <li className="discoverButton">
             <img src="/images/search.png" alt="" />

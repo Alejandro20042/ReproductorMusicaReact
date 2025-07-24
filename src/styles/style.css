@@ -1,4 +1,5 @@
-html,body {
+html,
+body {
   background-color: #111;
   color: white;
   margin: 0;
@@ -203,45 +204,101 @@ html,body {
 }
 
 .search-results {
-  max-width: 300px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
   max-height: 300px;
   overflow-y: auto;
-  padding: 15px 10 0 0;
-  margin-top: 20px;
-  opacity: 0.8;
-  border-radius: 8px;
-  scrollbar-width: thin;
-  position: fixed;
-  scrollbar-color: black grey;
+  background-color: rgba(30, 30, 30, 0.95);
+  color: #fff;
+  padding: 10px 15px;
+  margin-top: 5px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
+  z-index: 9999;
   cursor: pointer;
-  top: 10%;
+  box-sizing: border-box;
+}
+
+
+.search-results::-webkit-scrollbar {
+  width: 8px;
+}
+
+.search-results::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.search-results::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+/* Responsive ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+  .search-results {
+    right: 10px;
+    max-width: 280px;
+    max-height: 300px;
+    width: 90vw;
+    padding: 12px 16px 8px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-results {
+    top: 1.8rem;
+    right: 5px;
+    max-width: 260px;
+    max-height: 250px;
+    width: 95vw;
+    padding: 10px 12px 6px 10px;
+    font-size: 0.9rem;
+  }
 }
 
 .input-container {
   position: relative;
   width: 250px;
-  padding: 5px;
 }
 
 #searchInput {
   width: 100%;
-  padding-right: 30px;
-  height: 30px;
-  max-height: 300px;
-  position: absolute;
+  padding: 8px 30px 8px 12px;
+  height: 36px;
+  border-radius: 20px;
+  border: none;
+  background-color: #333;
+  color: white;
+  box-sizing: border-box;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.itmens-search {
+  margin-bottom: 1rem;
+  padding: 2px 1px;
+  transition: background-color 0.3s ease;
+}
+
+.itmens-search:hover {
+  background-color: #2a2a2a;
 }
 
 .clear-icon {
   position: absolute;
-  right: 0px;
-  top: 25px;
+  right: 10px;
+  top: 1.1rem;
   transform: translateY(-50%);
   cursor: pointer;
   color: #aaa;
   font-size: 16px;
   display: none;
-
 }
+
 
 .hamburger {
   display: none;
@@ -498,7 +555,7 @@ html,body {
   display: flex;
   align-items: center;
   height: 300px;
-  width: 100%;
+  width: 99%;
   background: #111;
   padding: 20px;
   box-sizing: border-box;
@@ -597,11 +654,11 @@ html,body {
 }
 
 .contenido {
-  height: 100vh;       
-  width:1500px;
-  overflow-y: auto;    
-  margin-left: 0px;  
-  padding-bottom: 90px; 
+  height: 100vh;
+  width: 1500px;
+  overflow-y: auto;
+  margin-left: 0px;
+  padding-bottom: 90px;
   box-sizing: border-box;
 }
 
@@ -610,7 +667,7 @@ html,body {
 
 @media (max-width: 1200px) {
   .contenido {
-    width: 100% !important; 
+    width: 100% !important;
     max-width: 1200px;
   }
 }
@@ -761,13 +818,17 @@ html,body {
   }
 }
 
+@media (max-width: 768px) {
+  .rightSection {
+    display: none;
+  }
+}
+
 .loading-container p {
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 20px;
 }
-
-
 
 .alerta-emergente {
   position: fixed;
@@ -777,14 +838,49 @@ html,body {
   color: white;
   padding: 10px 20px;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   z-index: 9999;
   font-weight: bold;
   animation: fadeinout 3s forwards;
 }
 
 @keyframes fadeinout {
-  0% { opacity: 0; transform: translateY(-10px); }
-  10%, 90% { opacity: 1; transform: translateY(0); }
-  100% { opacity: 0; transform: translateY(-10px); }
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  10%,
+  90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+@media (max-width: 768px) {
+  .input-container {
+    width: 250px;
+
+  }
+
+  #searchInput {
+    font-size: 0.9rem;
+    height: 2.5rem;
+    padding-top: 1rem;
+    ;
+  }
+}
+
+@media (max-width: 480px) {
+  #searchInput {
+    font-size: 0.85rem;
+    height: 2.5rem;
+    padding-top: 1rem;
+    ;
+  }
 }

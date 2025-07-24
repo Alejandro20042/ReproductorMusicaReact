@@ -27,32 +27,26 @@ const MainContent = ({
   return (
     <div className="mainContent">
       <div className="centralView">
-        <SearchBar
-          searchTerm={searchTerm}
-          onSearchChange={onSearchChange}
-          onClear={onClearSearch}
-          showClear={showClearBtn}
-        />
-        <BackgroundCarousel allSongs={allSongs} />
-        <div className="search-results" id="searchResults">
-          {searchResults.map(cancion => (
-            <div
-              key={cancion.id}
-              className="itmens-search"
-              onClick={() => setCancionSeleccionada(cancion)}
-              style={{ cursor: 'pointer' }}
-            >
-              <div className="search-item-info">
-                <strong>{cancion.titulo}</strong>
-                <br />
-                {cancion.artistaCompleto.nombre}
-              </div>
-            </div>
-          ))}
+        <div className="search-carousel-container">
+          <SearchBar
+            searchTerm={searchTerm}
+            onSearchChange={onSearchChange}
+            onClear={onClearSearch}
+            showClear={showClearBtn}
+            searchResults={searchResults}
+            setCancionSeleccionada={setCancionSeleccionada}
+          />
+          <BackgroundCarousel allSongs={allSongs} />
         </div>
       </div>
+
+      {/* Contenedor responsive con Tailwind para secciones */}
       <div className="containeralbumformmain">
-        <AlbumSection albums={albums} canciones={allSongs} onSelectSong={setCancionSeleccionada} />
+        <AlbumSection
+          albums={albums}
+          canciones={allSongs}
+          onSelectSong={setCancionSeleccionada}
+        />
         <SingleSection singles={singles} onSelectSong={setCancionSeleccionada} />
       </div>
     </div>

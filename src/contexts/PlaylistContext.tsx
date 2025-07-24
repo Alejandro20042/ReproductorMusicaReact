@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import type { Song } from "../interfaces/types";
 
 export type Playlist = {
@@ -16,13 +16,33 @@ type PlaylistContextType = {
 const PlaylistContext = createContext<PlaylistContextType | undefined>(undefined);
 
 export const PlaylistProvider = ({ children }: { children: ReactNode }) => {
-  const [playlists, setPlaylists] = useState<Playlist[]>([
-    {
-      id: "playlistguardados",
-      nombre: "Playlist",
-      canciones: [],
-    },
-  ]);
+  const [playlists, setPlaylists] = useState<Playlist[]>(() => {
+    const saved = localStorage.getItem("playlists");
+    if (saved) {
+      try {
+        return JSON.parse(saved) as Playlist[];
+      } catch {
+        return [
+          {
+            id: "playlistguardados",
+            nombre: "Playlist",
+            canciones: [],
+          },
+        ];
+      }
+    }
+    return [
+      {
+        id: "playlistguardados",
+        nombre: "Playlist",
+        canciones: [],
+      },
+    ];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("playlists", JSON.stringify(playlists));
+  }, [playlists]);
 
   const crearPlaylist = (nombre: string) => {
     const nueva: Playlist = {
@@ -38,11 +58,11 @@ export const PlaylistProvider = ({ children }: { children: ReactNode }) => {
       prev.map((playlist) =>
         playlist.id === playlistId
           ? {
-              ...playlist,
-              canciones: playlist.canciones.some((c) => c.id === cancion.id)
-                ? playlist.canciones
-                : [...playlist.canciones, cancion],
-            }
+            ...playlist,
+            canciones: playlist.canciones.some((c) => c.id === cancion.id)
+              ? playlist.canciones
+              : [...playlist.canciones, cancion],
+          }
           : playlist
       )
     );
