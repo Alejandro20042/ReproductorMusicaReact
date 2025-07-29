@@ -1,1 +1,1 @@
-export const BASE_URL = "https://music-app-backend-aoou.onrender.com/";
+export const BASE_URL = "https://music-app-backend-aoou.onrender.com";
