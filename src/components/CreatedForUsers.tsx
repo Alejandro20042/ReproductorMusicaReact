@@ -2,7 +2,7 @@ import type { CreatedForUsersProps } from '../interfaces/types';
 
 const CreatedForAlejandro = ({ songs }: CreatedForUsersProps) => {
   const uniqueAlbums = songs
-    .map(song => song.albumCompleto)
+    .map(song => song.album)
     .filter((album, index, self) => index === self.findIndex(a => a.id === album.id));
 
   const buildImageUrl = (path: string | undefined) => {
@@ -19,13 +19,13 @@ const CreatedForAlejandro = ({ songs }: CreatedForUsersProps) => {
             key={album.id}
             className="album-card"
             style={{
-              backgroundImage: `url(${buildImageUrl(album.portada)})`,
+              backgroundImage: `url(${buildImageUrl(album.cover)})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
             }}
           >
             <div className="album-title-overlay">
-              <strong>{album.titulo}</strong>
+              <strong>{album.title}</strong>
             </div>
           </div>
         ))}
