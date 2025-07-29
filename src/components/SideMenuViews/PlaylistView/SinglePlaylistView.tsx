@@ -26,7 +26,7 @@ const SinglePlaylistView = () => {
       <div className="playlist-header">
         <div className="playlist-cover">
           <img
-            src={`https://api-musica.netlify.app/${playlist.canciones[0]?.albumCompleto.portada}`}
+            src={`https://api-musica.netlify.app/${playlist.canciones[0]?.album.cover}`}
             alt={playlist.nombre}
           />
         </div>
@@ -51,13 +51,13 @@ const SinglePlaylistView = () => {
                 onClick={() => setCancionSeleccionada(cancion)}
               >
                 <img
-                  src={`https://api-musica.netlify.app/${cancion.albumCompleto.portada}`}
-                  alt={cancion.titulo}
+                  src={`https://api-musica.netlify.app/${cancion.album.cover}`}
+                  alt={cancion.title}
                   className="song-thumb"
                 />
                 <div className="song-info">
-                  <p className="song-title">{cancion.titulo}</p>
-                  <p className="song-artist">{cancion.artista}</p>
+                  <p className="song-title">{cancion.title}</p>
+                  <p className="song-artist">{cancion.artist.name}</p>
                 </div>
               </li>
             ))}

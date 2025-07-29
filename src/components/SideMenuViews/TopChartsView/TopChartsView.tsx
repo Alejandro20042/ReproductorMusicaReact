@@ -21,12 +21,12 @@ const TopChartsView = () => {
             style={{ cursor: 'pointer' }}
           >
             <span className="position">{index + 1}</span>
-            <img src={getImageUrl(song.artistaCompleto.imagen)} alt={song.artista} />
+            <img src={getImageUrl(song.artist.image_url)} alt={song.artist.name} />
             <div className="song-info">
-              <strong>{song.titulo}</strong>
-              <p>{song.artista}</p>
+              <strong>{song.title}</strong>
+              <p>{song.artist.name}</p>
             </div>
-            <span className="duration">{song.duracion}</span>
+            <span className="duration">{song.duration}</span>
           </li>
         ))}
       </ol>

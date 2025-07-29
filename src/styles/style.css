@@ -654,11 +654,10 @@ body {
 }
 
 .contenido {
-  height: 100vh;
-  width: 1500px;
+  height: calc(100vh - 112px);
+  width: 100%;
   overflow-y: auto;
   margin-left: 0px;
-  padding-bottom: 90px;
   box-sizing: border-box;
 }
 
@@ -732,7 +731,7 @@ body {
 
   .contenido {
     width: 100% !important;
-    height: calc(100vh - 90px);
+    height: calc(100vh - 183px);
     padding: 20px;
     margin-left: 0;
   }

@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import SongsApiService from './data/services/songs_api_service';
 import "./styles/style.css";
 
 import Layout from './components/Layout';
-import MainContent from './components/MainContent';
+import HomeView from './components/HomeView';
 import GenreView from './components/SideMenuViews/GenreView/GenreView';
 import TopChartsView from './components/SideMenuViews/TopChartsView/TopChartsView';
 
-import type { Song } from './interfaces/types';
+import type { IAlbum, ISong } from './interfaces/ISong';
 import { FavoritesProvider } from './contexts/FavoritesContext';
 import FavoritosView from './components/SideMenuViews/FavoritesView/FavoritesView';
 import PageNotReady from './components/PageNotReady';
@@ -15,48 +16,21 @@ import { PlaylistProvider } from './contexts/PlaylistContext';
 import SinglePlaylistView from './components/SideMenuViews/PlaylistView/SinglePlaylistView';
 import PlaylistsView from './components/SideMenuViews/PlaylistView/PlaylistsView';
 
+import _ from "lodash";
+
 const App = () => {
-  const [allSongs, setAllSongs] = useState<Song[]>([]);
-  const [albums, setAlbums] = useState<{ id: string | number; titulo: string; añoLanzamiento: number }[]>([]);
-  const [singles, setSingles] = useState<Song[]>([]);
+  const [allSongs, setAllSongs] = useState<ISong[]>([]);
+  const [albums, setAlbums] = useState<IAlbum[]>([]);
+  const [singles, setSingles] = useState<ISong[]>([]);
   const [genres, setGenres] = useState<string[]>([]);
   const [albumCovers, setAlbumCovers] = useState<string[]>([]);
 
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchResults, setSearchResults] = useState<Song[]>([]);
+  const [searchResults, setSearchResults] = useState<ISong[]>([]);
   const [showClearBtn, setShowClearBtn] = useState(false);
   const [loading, setLoading] = useState(true);
 
-
   useEffect(() => {
-    async function fetchData() {
-      try {
-        setLoading(true);
-        const resSongs = await fetch('https://api-musica.netlify.app/api/canciones');
-        const dataSongs = await resSongs.json();
-        setAllSongs(dataSongs.data);
-
-        const uniqueAlbumsMap = new Map();
-        dataSongs.data.forEach((song: Song) => {
-          if (!uniqueAlbumsMap.has(song.albumCompleto.id)) {
-            uniqueAlbumsMap.set(song.albumCompleto.id, song.albumCompleto);
-          }
-        });
-        setAlbums(Array.from(uniqueAlbumsMap.values()));
-        setSingles(dataSongs.data);
-
-        const resGenres = await fetch('https://api-musica.netlify.app/api/generos');
-        const dataGenres = await resGenres.json();
-        setGenres(dataGenres.data);
-
-        const covers = Array.from(uniqueAlbumsMap.values()).map(album => album.portada || '');
-        setAlbumCovers(covers);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      } finally {
-        setLoading(false);
-      }
-    }
     fetchData();
   }, []);
 
@@ -67,15 +41,45 @@ const App = () => {
     } else {
       const filtered = allSongs.filter(
         song =>
-          song.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          song.artistaCompleto.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+          song.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          song.artist?.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
       setSearchResults(filtered);
       setShowClearBtn(true);
     }
   }, [searchTerm, allSongs]);
 
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const songsResponse = await SongsApiService.getSongs();
+      loadData(songsResponse);
+      setAllSongs(songsResponse);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const loadData = async (songs: ISong[]) => {
+    const albumsList: IAlbum[] = [];
+    songs.forEach((song: ISong) => {
+      albumsList.push(song.album);
+    });
+    const albumsUniqList = _.uniqBy(albumsList, "id");
+    setAlbums(albumsUniqList);
+    setSingles(songs);
+    const genresList = albumsUniqList.map(album => album.genere);
+    const genreUniqList = _.uniq(genresList); 
+    setGenres(genreUniqList);
+
+    const covers = Array.from(albumsList.values()).map(album => album.cover || '');
+    setAlbumCovers(covers);
+  };
+
   const handleSearchChange = (value: string) => setSearchTerm(value);
+
   const handleClearSearch = () => {
     setSearchTerm('');
     setSearchResults([]);
@@ -91,7 +95,7 @@ const App = () => {
               <Route
                 index
                 element={
-                  <MainContent
+                  <HomeView
                     albums={albums}
                     singles={singles}
                     searchTerm={searchTerm}
@@ -119,10 +123,10 @@ const App = () => {
                 }
               />
               <Route path="topcharts" element={<TopChartsView />} />
-              <Route path="/favorites" element={<FavoritosView />} />
-              <Route path="/playlist" element={<PlaylistsView />} />
-              <Route path="/playlist/:id" element={<SinglePlaylistView />} />
-              <Route path='/podcast' element={<PageNotReady />} />
+              <Route path="favorites" element={<FavoritosView />} />
+              <Route path="playlist" element={<PlaylistsView />} />
+              <Route path="playlist/:id" element={<SinglePlaylistView />} />
+              <Route path='podcast' element={<PageNotReady />} />
             </Route>
           </Routes>
         </Router>

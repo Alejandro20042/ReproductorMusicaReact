@@ -1,3 +1,4 @@
+import type { ISong } from '../interfaces/ISong';
 import type { SearchBarProps } from '../interfaces/types';
 
 const SearchBar = ({
@@ -8,7 +9,7 @@ const SearchBar = ({
   searchResults,
   setCancionSeleccionada,
 }: SearchBarProps & {
-  searchResults: any[];
+  searchResults: ISong[];
   setCancionSeleccionada: (cancion: any) => void;
 }) => {
   return (
@@ -41,9 +42,9 @@ const SearchBar = ({
               style={{ cursor: 'pointer' }}
             >
               <div className="search-item-info">
-                <strong>{cancion.titulo}</strong>
+                <strong>{cancion.title}</strong>
                 <br />
-                {cancion.artistaCompleto.nombre}
+                {cancion.artist.name}
               </div>
             </div>
           ))}

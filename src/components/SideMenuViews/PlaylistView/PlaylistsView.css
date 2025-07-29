@@ -1,8 +1,7 @@
 .playlists-container {
   padding: 2.5rem 3rem;
   color: #fff;
-  background: linear-gradient(135deg, #121212 0%, #1d1d1d 100%);
-  min-height: 100vh;
+ 
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 

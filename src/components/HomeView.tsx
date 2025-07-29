@@ -1,5 +1,5 @@
 import { useOutletContext } from 'react-router-dom';
-import type { MainContentProps, OutletContextType } from '../interfaces/types';
+import type { HomeViewProps, OutletContextType } from '../interfaces/types';
 
 import SearchBar from './SearchBar';
 import AlbumSection from './AlbumSection';
@@ -7,7 +7,7 @@ import SingleSection from './SingleSection';
 import BackgroundCarousel from './BackgroundCarousel';
 import LoadingScreen from './LoadingScreen/LoadingScreen';
 
-const MainContent = ({
+const HomeView = ({
   albums,
   singles,
   searchTerm,
@@ -17,7 +17,7 @@ const MainContent = ({
   searchResults,
   allSongs,
   loading = false,
-}: MainContentProps) => {
+}: HomeViewProps) => {
   const outletContext = useOutletContext<OutletContextType>();
   if (!outletContext) return null;
   const { setCancionSeleccionada } = outletContext;
@@ -40,7 +40,6 @@ const MainContent = ({
         </div>
       </div>
 
-      {/* Contenedor responsive con Tailwind para secciones */}
       <div className="containeralbumformmain">
         <AlbumSection
           albums={albums}
@@ -53,4 +52,4 @@ const MainContent = ({
   );
 };
 
-export default MainContent;
+export default HomeView;

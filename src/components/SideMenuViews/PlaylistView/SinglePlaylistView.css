@@ -1,13 +1,10 @@
 .playlist-page {
   display: flex;
   flex-direction: column;
-  height: 100vh;  /* Esto es importante para que la altura esté bien definida */
   padding: 2rem;
   color: #fff;
   box-sizing: border-box;
-  /* Evita doble scroll */
 }
-
 
 .playlist-header {
   display: flex;

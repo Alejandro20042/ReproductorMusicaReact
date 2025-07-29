@@ -15,9 +15,9 @@ const SingleSection = ({ singles, onSelectSong }: SingleSectionProps) => {
             style={{ cursor: "pointer" }}
             onClick={() => onSelectSong(single)}
           >
-            ▶ <img src={getImageUrl(single.artistaCompleto.imagen)} />
-            <strong>{single.titulo}</strong> - {single.artista}{' '}
-            <span style={{ fontSize: 12, color: '#aaa' }}>({single.duracion})</span>
+            ▶ <img src={getImageUrl(single.artist.image_url)} />
+            <strong>{single.title}</strong> - {single.artist.name}{' '}
+            <span style={{ fontSize: 12, color: '#aaa' }}>({single.duration})</span>
           </li>
         ))}
       </ol>

@@ -1,11 +1,12 @@
 import { Outlet } from 'react-router-dom';
 import { useState } from 'react';
-import type { LayoutProps, Song } from '../interfaces/types';
+import type { LayoutProps } from '../interfaces/types';
 import SideMenu from './SideMenu';
 import MusicPlayer from './MusicPlayer';
+import type { ISong } from '../interfaces/ISong';
 
 const Layout = ({ canciones }: LayoutProps) => {
-  const [cancionSeleccionada, setCancionSeleccionada] = useState<Song | null>(null);
+  const [cancionSeleccionada, setCancionSeleccionada] = useState<ISong | null>(null);
   
   return (
     <div className="appContainer"> 

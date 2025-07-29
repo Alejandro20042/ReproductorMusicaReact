@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from "react";
-import type { MusicPlayerProps, Song } from "../interfaces/types";
+import type { MusicPlayerProps } from "../interfaces/types";
 import { useFavorites } from "../contexts/FavoritesContext";
+import type { ISong } from "../interfaces/ISong";
 
 const MusicPlayer = ({ canciones, cancionInicial = null }: MusicPlayerProps) => {
-  const [cancionActual, setCancionActual] = useState<Song | null>(cancionInicial);
+  const [cancionActual, setCancionActual] = useState<ISong | null>(cancionInicial);
   const [reproduciendo, setReproduciendo] = useState(false);
   const [tiempoActual, setTiempoActual] = useState(0);
   const intervaloRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -16,6 +17,10 @@ const MusicPlayer = ({ canciones, cancionInicial = null }: MusicPlayerProps) => 
     setTiempoActual(0);
     setReproduciendo(false);
   }, [cancionInicial]);
+
+  useEffect(() => {
+    setTiempoActual(0);
+  }, [cancionActual]);
 
   const duracionEnSegundos = (duracion: string | number): number => {
     if (typeof duracion === "number") return duracion;
@@ -33,7 +38,7 @@ const MusicPlayer = ({ canciones, cancionInicial = null }: MusicPlayerProps) => 
     if (reproduciendo && cancionActual) {
       intervaloRef.current = setInterval(() => {
         setTiempoActual((prev) => {
-          const durSeg = duracionEnSegundos(cancionActual.duracion);
+          const durSeg = duracionEnSegundos(cancionActual.duration);
           if (prev >= durSeg) {
             clearInterval(intervaloRef.current!);
             setReproduciendo(false);
@@ -54,25 +59,25 @@ const MusicPlayer = ({ canciones, cancionInicial = null }: MusicPlayerProps) => 
   };
 
   const getImageUrl = (path?: string) =>
-    path ? `https://api-musica.netlify.app/${path}` : "";
+    path ? `https://api-musica.netlify.app/${path}` : "localhost";
 
   const duracionSegundos = cancionActual
-    ? duracionEnSegundos(cancionActual.duracion)
+    ? duracionEnSegundos(cancionActual.duration)
     : 0;
 
   return (
     <div className="musicPlayer">
       <div className="leftSection" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
         <img
-          src={getImageUrl(cancionActual?.artistaCompleto.imagen)}
+          src={getImageUrl(cancionActual?.artist.image_url)}
           className="albumCover"
-          alt={cancionActual?.albumCompleto.titulo || "Album"}
+          alt={cancionActual?.album.title || "Album"}
         />
         <div className="songInfo" style={{ flex: 1 }}>
           <div className="songTitle">
-            {cancionActual?.titulo || "Selecciona una canción"}
+            {cancionActual?.title || "Selecciona una canción"}
           </div>
-          <div className="artistName">{cancionActual?.artista || ""}</div>
+          <div className="artistName">{cancionActual?.artist.name || ""}</div>
         </div>
 
         <button
@@ -80,9 +85,9 @@ const MusicPlayer = ({ canciones, cancionInicial = null }: MusicPlayerProps) => 
             cancionActual &&
             toggleFavorito({
               id: cancionActual.id.toString(),
-              title: cancionActual.titulo,
-              artist: cancionActual.artista,
-              cover: cancionActual.albumCompleto.portada || "",
+              title: cancionActual.title,
+              artist: cancionActual.artist.name,
+              cover: cancionActual.album.cover || "",
             })
           }
           style={{

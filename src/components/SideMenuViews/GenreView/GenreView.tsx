@@ -4,7 +4,7 @@ import "./GenreView.css";
 import LoadingScreen from "../../LoadingScreen/LoadingScreen";
 import { useOutletContext } from "react-router-dom";
 import AddToPlaylistMenu from "../../ContextMenu/AddToPlaylistMenu";
-import type { Song } from "../../../interfaces/types";
+import type { ISong } from "../../../interfaces/ISong";
 
 function GenreView({
   genres,
@@ -17,7 +17,7 @@ function GenreView({
   const { setCancionSeleccionada } = useOutletContext<OutletContextType>();
 
   const [contextMenuPos, setContextMenuPos] = useState<{ x: number; y: number } | null>(null);
-  const [cancionContextMenu, setCancionContextMenu] = useState<Song | null>(null);
+  const [cancionContextMenu, setCancionContextMenu] = useState<ISong | null>(null);
 
   const [alertaVisible, setAlertaVisible] = useState(false);
   const [alertaMensaje, setAlertaMensaje] = useState("");
@@ -25,7 +25,7 @@ function GenreView({
   const cancionesFiltradas = generoSeleccionado
     ? canciones.filter(
       (c) =>
-        c.albumCompleto.genero?.toLowerCase() === generoSeleccionado.toLowerCase()
+        c.album.genere?.toLowerCase() === generoSeleccionado.toLowerCase()
     )
     : [];
 
@@ -34,7 +34,7 @@ function GenreView({
     setCancionContextMenu(null);
   };
 
-  const handleContextMenu = (event: React.MouseEvent, cancion: Song) => {
+  const handleContextMenu = (event: React.MouseEvent, cancion: ISong) => {
     event.preventDefault();
     setCancionContextMenu(cancion);
     setContextMenuPos({ x: event.pageX, y: event.pageY });
@@ -95,7 +95,7 @@ function GenreView({
                   onContextMenu={(e) => handleContextMenu(e, c)}
                   style={{ cursor: "pointer", userSelect: "none" }}
                 >
-                  🎵 {c.titulo} — {c.duracion}
+                  🎵 {c.title} — {c.duration}
                 </li>
               ))}
             </ul>
@@ -128,7 +128,7 @@ function GenreView({
         <h2>Volver a Escuchar</h2>
         <div className="album-grid">
           {volverAEscuchar.map((album) => {
-            const imageUrl = buildImageUrl(album.portada);
+            const imageUrl = buildImageUrl(album.cover);
             return (
               <div
                 key={album.id}
@@ -143,7 +143,7 @@ function GenreView({
                   boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
                   transition: "transform 0.2s ease",
                 }}
-                title={album.titulo}
+                title={album.title}
               >
                 <div
                   className="album-info"
@@ -158,10 +158,10 @@ function GenreView({
                   }}
                 >
                   <p className="album-title" style={{ margin: 0, fontWeight: "600" }}>
-                    {album.titulo}
+                    {album.title}
                   </p>
                   <p className="album-year" style={{ margin: 0, fontSize: "13px" }}>
-                    {album.añoLanzamiento}
+                    {album.launch_year}
                   </p>
                 </div>
               </div>
@@ -174,7 +174,7 @@ function GenreView({
         <h2>Escuchado Recientemente</h2>
         <div className="album-grid">
           {escuchadoRecientemente.map((album) => {
-            const imageUrl = buildImageUrl(album.portada);
+            const imageUrl = buildImageUrl(album.cover);
             return (
               <div
                 key={album.id}
@@ -189,7 +189,7 @@ function GenreView({
                   boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
                   transition: "transform 0.2s ease",
                 }}
-                title={album.titulo}
+                title={album.title}
               >
                 <div
                   className="album-info"
@@ -204,10 +204,10 @@ function GenreView({
                   }}
                 >
                   <p className="album-title" style={{ margin: 0, fontWeight: "600" }}>
-                    {album.titulo}
+                    {album.title}
                   </p>
                   <p className="album-year" style={{ margin: 0, fontSize: "13px" }}>
-                    {album.añoLanzamiento}
+                    {album.launch_year}
                   </p>
                 </div>
               </div>

@@ -9,7 +9,7 @@ const AlbumSection = ({ albums, canciones, onSelectSong }: AlbumSectionProps) =>
       <p className="albumlastes">Album latest</p>
       <ol id="albumList">
         {albums.slice(0, 4).map(album => {
-          const primeraCancion = canciones.find(c => c.albumCompleto.id === album.id);
+          const primeraCancion = canciones.find(c => c.album.id === album.id);
           return (
             <li
               key={album.id}
@@ -17,8 +17,8 @@ const AlbumSection = ({ albums, canciones, onSelectSong }: AlbumSectionProps) =>
               style={{ cursor: "pointer" }}
               onClick={() => primeraCancion && onSelectSong(primeraCancion)}
             >
-              ▶ <img src={getImageUrl(album.portada)} alt={album.titulo} />
-              {album.titulo} ({album.añoLanzamiento})
+              ▶ <img src={getImageUrl(album.cover)} alt={album.title} />
+              {album.title} ({album.launch_year})
             </li>
           );
         })}

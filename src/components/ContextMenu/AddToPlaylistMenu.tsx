@@ -1,9 +1,11 @@
+import { useEffect } from "react";
 import { usePlaylists } from "../../contexts/PlaylistContext";
-import type { Song } from "../../interfaces/types";
+import type { ISong } from "../../interfaces/ISong";
+
 import "./AddToPlaylistMenu.css";
 
 type Props = {
-    cancion: Song;
+    cancion: ISong;
     onClose: () => void;
     position: { x: number; y: number };
     onAddSuccess: (playlistName: string) => void;
@@ -11,6 +13,10 @@ type Props = {
 
 const AddToPlaylistMenu = ({ cancion, onClose, position, onAddSuccess }: Props) => {
     const { playlists, agregarAPlaylist } = usePlaylists();
+
+    useEffect(() => {
+        console.log(playlists);
+    }, [playlists]);
 
     const handleAdd = (playlistId: string) => {
         agregarAPlaylist(playlistId, cancion);

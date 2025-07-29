@@ -1,16 +1,16 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
-import type { Song } from "../interfaces/types";
+import type { ISong } from "../interfaces/ISong";
 
 export type Playlist = {
   id: string;
   nombre: string;
-  canciones: Song[];
+  canciones: ISong[];
 };
 
 type PlaylistContextType = {
   playlists: Playlist[];
   crearPlaylist: (nombre: string) => void;
-  agregarAPlaylist: (playlistId: string, cancion: Song) => void;
+  agregarAPlaylist: (playlistId: string, cancion: ISong) => void;
 };
 
 const PlaylistContext = createContext<PlaylistContextType | undefined>(undefined);
@@ -53,7 +53,7 @@ export const PlaylistProvider = ({ children }: { children: ReactNode }) => {
     setPlaylists((prev) => [...prev, nueva]);
   };
 
-  const agregarAPlaylist = (playlistId: string, cancion: Song) => {
+  const agregarAPlaylist = (playlistId: string, cancion: ISong) => {
     setPlaylists((prev) =>
       prev.map((playlist) =>
         playlist.id === playlistId
